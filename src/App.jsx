@@ -42,21 +42,22 @@ function App() {
 					</h1>
 					<h2 className="text-slate-800">Words typed: {characterCount}</h2>
 					<h3 className="text-slate-800">Remaining time: {time}</h3>
-					<form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-						<input
-							className="p-3 border-solid border-2 text-black bg-white rounded-md outline-none"
-							autoFocus
-							type="text"
-							value={buffer}
-							onChange={(event) => setBuffer(event.target.value)}
-						/>
-						<button
-							className="bg-purple-500 p-1 font-bold rounded-md "
-							type="submit"
-						>
-							Submit
-						</button>
-					</form>
+					<input
+						className="p-3 border-solid border-2 border-blue-600 text-black bg-white rounded-md outline-none"
+						autoFocus
+						type="text"
+						value={buffer}
+						onChange={(event) => {
+							setBuffer(event.target.value)
+							if (event.target.value === word) {
+								setWord(randomWords[(Math.random() * randomWords.length) | 0])
+								setCharacterCount(
+									(characterCount) => characterCount + word.length
+								)
+								setBuffer("")
+							}
+						}}
+					/>
 				</div>
 			) : (
 				<div>
