@@ -34,22 +34,24 @@ function App() {
 	}, [time, isPlaying, characterCount])
 
 	return (
-		<div>
+		<div className="bg-white rounded-lg p-4">
 			{time !== 0 ? (
 				<div className="flex flex-col items-center gap-2">
-					<h1 className="font-bold text-2xl">{word.toUpperCase()}</h1>
-					<h2>Words typed: {characterCount}</h2>
-					<h3>Remaining time: {time}</h3>
+					<h1 className="font-bold text-2xl text-slate-800">
+						{word.toUpperCase()}
+					</h1>
+					<h2 className="text-slate-800">Words typed: {characterCount}</h2>
+					<h3 className="text-slate-800">Remaining time: {time}</h3>
 					<form className="flex flex-col gap-2" onSubmit={handleSubmit}>
 						<input
-							className="p-3 border-solid border-2 bg-black rounded-md outline-none"
+							className="p-3 border-solid border-2 text-black bg-white rounded-md outline-none"
 							autoFocus
 							type="text"
 							value={buffer}
 							onChange={(event) => setBuffer(event.target.value)}
 						/>
 						<button
-							className="bg-purple-500 p-1 font-bold rounded-md"
+							className="bg-purple-500 p-1 font-bold rounded-md "
 							type="submit"
 						>
 							Submit
@@ -60,17 +62,30 @@ function App() {
 				<div>
 					{isPlaying ? (
 						<div className="flex flex-col items-center gap-4">
-							<h1 className="font-bold text-2xl">Game Over</h1>
+							<h1 className="font-bold text-slate-800 text-2xl">Game Over</h1>
 							<div className="flex flex-row gap-1">
-								<p>Your Score: </p>
-								<p className="font-bold">{score}</p>
-								<p>words per minute</p>
+								<p className="text-slate-800">Your Score: </p>
+								<p className="font-bold text-slate-800">{score}</p>
+								<p className="text-slate-800">words per minute</p>
 							</div>
+							<button
+								className="bg-purple-500 text-xl p-1 w-40 font-bold rounded-md"
+								onClick={() => {
+									setIsPlaying(true)
+									setTime(60)
+									setCharacterCount(0)
+									setScore(0)
+								}}
+							>
+								Play again
+							</button>
 						</div>
 					) : (
 						<div className="flex flex-col items-center gap-4">
-							<h1 className="font-bold text-2xl">Words per minute</h1>
-							<h3 className="text-gray-300">Test your typing skills</h3>
+							<h1 className="font-bold text-2xl text-slate-800">
+								Words per minute
+							</h1>
+							<h3 className="text-gray-500">Test your typing skills</h3>
 							<button
 								className="bg-purple-500 text-xl p-1 w-40 font-bold rounded-md"
 								onClick={() => {
