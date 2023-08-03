@@ -1,28 +1,14 @@
 import "./App.css"
 import randomWords from "./utils/Words"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 function App() {
 	const [characterCount, setCharacterCount] = useState(0)
 	const [buffer, setBuffer] = useState("")
+	const [time, setTime] = useState(0)
 	const [word, setWord] = useState(
 		() => randomWords[(Math.random() * randomWords.length) | 0]
 	)
-	const [isDarkMode, setIsDarkMode] = useState(false)
-
-	useEffect(() => {
-		const rootElement = document.documentElement
-
-		if (isDarkMode) {
-			rootElement.classList.add("dark")
-		} else {
-			rootElement.classList.remove("dark")
-		}
-	}, [isDarkMode])
-
-	const toggleDarkMode = () => {
-		setIsDarkMode(!isDarkMode)
-	}
 
 	function handleSubmit(event) {
 		event.preventDefault()
@@ -34,32 +20,50 @@ function App() {
 		setBuffer("")
 	}
 
+	useEffect(() => {
+		if (time !== 0) {
+			const timeout = setTimeout(() => setTime(time - 1), 1000)
+			return () => clearTimeout(timeout)
+		}
+	}, [time])
+
 	return (
-		<div className="flex flex-col gap-4">
-			<button
-				className={`px-4 py-2 rounded ${
-					isDarkMode ? "bg-white text-gray-900" : "bg-gray-900 text-white"
-				}`}
-				onClick={toggleDarkMode}
-			>
-				{isDarkMode ? "Light Mode" : "Dark Mode"}
-			</button>
-			<h1 className="font-bold text-2xl">{word.toUpperCase()}</h1>
-			<h2 className="">Words typed: {characterCount}</h2>
-			<form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-				<input
-					autoFocus
-					type="text"
-					value={buffer}
-					onChange={(event) => setBuffer(event.target.value)}
-				/>
-				<button
-					className="bg-purple-500 p-1 font-bold rounded-md"
-					type="submit"
-				>
-					Submit
-				</button>
-			</form>
+		<div>
+			{time !== 0 ? (
+				<div className="flex flex-col items-center gap-2">
+					<h1 className="font-bold text-2xl">{word.toUpperCase()}</h1>
+					<h2>Words typed: {characterCount}</h2>
+					<h3>Remaining time: {time}</h3>
+					<form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+						<input
+							className="p-3 border-solid border-2 bg-black rounded-md outline-none"
+							autoFocus
+							type="text"
+							value={buffer}
+							onChange={(event) => setBuffer(event.target.value)}
+						/>
+						<button
+							className="bg-purple-500 p-1 font-bold rounded-md"
+							type="submit"
+						>
+							Submit
+						</button>
+					</form>
+				</div>
+			) : (
+				<div className="flex flex-col items-center gap-4">
+					<h1 className="font-bold text-2xl">Words per minute</h1>
+					<h3 className="text-gray-300">Test your typing skills</h3>
+					<button
+						className="bg-purple-500 text-xl p-1 w-40 font-bold rounded-md"
+						onClick={() => {
+							setTime(60)
+						}}
+					>
+						Play
+					</button>
+				</div>
+			)}
 		</div>
 	)
 }
