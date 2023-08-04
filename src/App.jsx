@@ -3,27 +3,40 @@ import randomWords from "./utils/Words"
 import { useEffect, useState } from "react"
 
 function App() {
+	// Estado para el conteo de caracteres
 	const [characterCount, setCharacterCount] = useState(0)
+
+	// Estado para la puntuación máxima
 	const [maxScore, setMaxScore] = useState(0)
+
+	// Estado para el buffer de entrada
 	const [buffer, setBuffer] = useState("")
+
+	// Estado para el tiempo restante
 	const [time, setTime] = useState(0)
+
+	// Estado para la palabra actual
 	const [word, setWord] = useState(
 		() => randomWords[(Math.random() * randomWords.length) | 0]
 	)
+
+	// Estado para el estado de juego (jugando o no)
 	const [isPlaying, setIsPlaying] = useState(false)
+
+	// Estado para la puntuación actual
 	const [score, setScore] = useState(0)
 
 	useEffect(() => {
 		if (time > 0) {
+			// Establecer un temporizador para reducir el tiempo
 			const timeout = setTimeout(() => setTime(time - 1), 1000)
 			return () => clearTimeout(timeout)
 		} else if (time === 0 && isPlaying) {
-			// Calcular el puntaje y mostrar el mensaje
+			// Calcular el puntaje y actualizar la puntuación máxima
 			const calculatedScore = Math.round((characterCount / 5) * 60)
 			setScore(calculatedScore)
-			console.log("Suka ~ file: App.jsx:35 ~ score:", score)
-			if (score > maxScore) {
-				setMaxScore(score)
+			if (calculatedScore > maxScore) {
+				setMaxScore(calculatedScore)
 			}
 		}
 	}, [time, isPlaying, characterCount])
@@ -31,6 +44,7 @@ function App() {
 	return (
 		<div className="bg-white rounded-lg p-4">
 			{time !== 0 ? (
+				// Pantalla de juego
 				<div className="flex flex-col items-center gap-2">
 					<h1 className="font-bold text-2xl text-slate-800">
 						{word.toUpperCase()}
@@ -55,8 +69,10 @@ function App() {
 					/>
 				</div>
 			) : (
+				// Pantalla de inicio o de fin de juego
 				<div>
 					{isPlaying ? (
+						// Pantalla de fin de juego
 						<div className="flex flex-col items-center gap-4">
 							<h1 className="font-bold text-slate-800 text-2xl">Game Over</h1>
 							<div className="flex flex-row gap-1">
@@ -82,6 +98,7 @@ function App() {
 							</button>
 						</div>
 					) : (
+						// Pantalla de inicio
 						<div className="flex flex-col items-center gap-4">
 							<h1 className="font-bold text-2xl text-slate-800">
 								Words per minute
