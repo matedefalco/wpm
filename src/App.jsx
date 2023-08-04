@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 function App() {
 	const [characterCount, setCharacterCount] = useState(0)
+	const [maxScore, setMaxScore] = useState(0)
 	const [buffer, setBuffer] = useState("")
 	const [time, setTime] = useState(0)
 	const [word, setWord] = useState(
@@ -30,6 +31,10 @@ function App() {
 			// Calcular el puntaje y mostrar el mensaje
 			const calculatedScore = Math.round((characterCount / 5) * 60)
 			setScore(calculatedScore)
+			console.log("Suka ~ file: App.jsx:35 ~ score:", score)
+			if (score > maxScore) {
+				setMaxScore(score)
+			}
 		}
 	}, [time, isPlaying, characterCount])
 
@@ -49,7 +54,7 @@ function App() {
 						value={buffer}
 						onChange={(event) => {
 							setBuffer(event.target.value)
-							if (event.target.value === word) {
+							if (event.target.value.trim() === word) {
 								setWord(randomWords[(Math.random() * randomWords.length) | 0])
 								setCharacterCount(
 									(characterCount) => characterCount + word.length
@@ -67,6 +72,11 @@ function App() {
 							<div className="flex flex-row gap-1">
 								<p className="text-slate-800">Your Score: </p>
 								<p className="font-bold text-slate-800">{score}</p>
+								<p className="text-slate-800">words per minute</p>
+							</div>
+							<div className="flex flex-row gap-1">
+								<p className="text-slate-800">Your MAX score: </p>
+								<p className="font-bold text-slate-800">{maxScore}</p>
 								<p className="text-slate-800">words per minute</p>
 							</div>
 							<button
