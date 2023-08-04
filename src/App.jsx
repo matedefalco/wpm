@@ -33,10 +33,9 @@ function App() {
 			return () => clearTimeout(timeout)
 		} else if (time === 0 && isPlaying) {
 			// Calcular el puntaje y actualizar la puntuación máxima
-			const calculatedScore = Math.round((characterCount / 5) * 60)
-			setScore(calculatedScore)
-			if (calculatedScore > maxScore) {
-				setMaxScore(calculatedScore)
+			setScore(characterCount)
+			if (characterCount > maxScore) {
+				setMaxScore(characterCount)
 			}
 		}
 	}, [time, isPlaying, characterCount])
