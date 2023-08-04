@@ -13,16 +13,6 @@ function App() {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [score, setScore] = useState(0)
 
-	function handleSubmit(event) {
-		event.preventDefault()
-
-		if (buffer === word) {
-			setWord(randomWords[(Math.random() * randomWords.length) | 0])
-			setCharacterCount((characterCount) => characterCount + word.length)
-		}
-		setBuffer("")
-	}
-
 	useEffect(() => {
 		if (time > 0) {
 			const timeout = setTimeout(() => setTime(time - 1), 1000)
