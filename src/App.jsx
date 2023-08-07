@@ -2,6 +2,8 @@ import "./App.css"
 import randomWords from "./utils/Words"
 import { useEffect, useState } from "react"
 
+
+
 function App() {
 	// Estado para el conteo de caracteres
 	const [characterCount, setCharacterCount] = useState(0)
@@ -98,22 +100,24 @@ function App() {
 						</div>
 					) : (
 						// Pantalla de inicio
-						<div className="flex flex-col items-center gap-4">
-							<h1 className="font-bold text-2xl text-slate-800">
-								Words per minute
-							</h1>
-							<h3 className="text-gray-500">Test your typing skills</h3>
-							<button
-								className="bg-purple-500 text-xl p-1 w-40 font-bold rounded-md"
-								onClick={() => {
-									setIsPlaying(true)
-									setTime(60)
-									setCharacterCount(0)
-									setScore(0)
-								}}
-							>
-								Play
-							</button>
+						<div>
+							<div className="flex flex-col items-center gap-4">
+								<h1 className="font-bold text-2xl text-slate-800">
+									Words per minute
+								</h1>
+								<h3 className="text-gray-500">Test your typing skills</h3>
+								<button
+									className="bg-purple-500 text-xl p-1 w-40 font-bold rounded-md"
+									onClick={() => {
+										setIsPlaying(true)
+										setTime(60)
+										setCharacterCount(0)
+										setScore(0)
+									}}
+								>
+									Play
+								</button>
+							</div>
 						</div>
 					)}
 				</div>
